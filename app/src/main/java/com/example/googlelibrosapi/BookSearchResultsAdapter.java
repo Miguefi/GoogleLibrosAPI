@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.bumptech.glide.Glide;
+import com.bumptech.glide.Glide;
 import com.example.googlelibrosapi.R;
 import com.example.googlelibrosapi.data.Volume;
 //import com.example.googlelibrosapi.util.Util;
@@ -41,12 +42,12 @@ public class BookSearchResultsAdapter extends RecyclerView.Adapter<BookSearchRes
         if (volume.getVolumeInfo().getImageLinks() != null) {
             String imageUrl = volume.getVolumeInfo().getImageLinks().getSmallThumbnail()
                     .replace("http://", "https://");
-            /*
+
             Glide.with(holder.itemView)
                     .load(imageUrl)
                     .into(holder.smallThumbnailImageView);
 
-             */
+
         }
 
         if (volume.getVolumeInfo().getAuthors() != null) {
