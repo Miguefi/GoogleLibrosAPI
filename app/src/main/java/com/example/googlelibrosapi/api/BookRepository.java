@@ -55,6 +55,23 @@ public class BookRepository {
                 });
     }
 
+    public void searchVolumesById(String id) {
+        bookSearchService.searchVolumesById(id)
+                .enqueue(new Callback<VolumesResponse>() {
+                    @Override
+                    public void onResponse(Call<VolumesResponse> call, Response<VolumesResponse> response) {
+                        if (response.body() != null) {
+                            volumesResponseLiveData.postValue(response.body());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<VolumesResponse> call, Throwable t) {
+                        volumesResponseLiveData.postValue(null);
+                    }
+                });
+    }
+
     /*public void searchVolumes(String keyword, String author, String apiKey) {
         bookSearchService.searchVolumes(keyword, author, apiKey)
                 .enqueue(new Callback<VolumesResponse>() {

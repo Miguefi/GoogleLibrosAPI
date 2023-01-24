@@ -8,18 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.googlelibrosapi.data.BookSearchViewModel;
-import com.example.googlelibrosapi.data.Volume;
 import com.example.googlelibrosapi.data.VolumesResponse;
 
-public class BuscadorLibros extends AppCompatActivity {
+public class Detail extends AppCompatActivity {
 
-    public static final String BOOK_ID = "";
     TextView busqueda, autor;
     Button buscar;
     RecyclerView listado;
@@ -29,12 +25,17 @@ public class BuscadorLibros extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_detail);
 
-        busqueda = findViewById(R.id.idBusqueda);
-        autor = findViewById(R.id.idAutor);
-        buscar = findViewById(R.id.idBuscar);
-        listado = findViewById(R.id.idList);
+        //mensaje = findViewById(R.id.ut02idRecpetora);
+        Intent i = getIntent();
+        String mensaje = i.getStringExtra(BuscadorLibros.BOOK_ID);
+        //mensaje.setText(i.getStringExtra(ut02Lanzadora.CLAVE_INFO));
+
+        /*busqueda = findViewById(R.id.idBusqueda);
+        //autor = findViewById(R.id.idAutor);
+        //buscar = findViewById(R.id.idBuscar);
+        //listado = findViewById(R.id.idList);
 
         BookSearchResultsAdapter adapter = new BookSearchResultsAdapter();
         listado.setLayoutManager(new LinearLayoutManager(this));
@@ -49,20 +50,7 @@ public class BuscadorLibros extends AppCompatActivity {
 
         buscar.setOnClickListener((v)->{
             vm.searchVolumes(busqueda.getText().toString() , autor.getText().toString());
-        });
+        });*/
 
-        adapter.setClickListener(new BookSearchResultsAdapter.ItemClickListener() {
-            @Override
-            public void onClick(View view, Volume volume) {
-                lanzar(volume.getId());
-            }
-        });
-
-    }
-
-    private void lanzar(String id){
-        Intent intento =  new Intent(this, Detail.class);
-        intento.putExtra(BOOK_ID, id);
-        startActivity(intento);
     }
 }

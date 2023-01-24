@@ -1,5 +1,6 @@
 package com.example.googlelibrosapi;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,18 +8,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.bumptech.glide.Glide;
 import com.bumptech.glide.Glide;
-import com.example.googlelibrosapi.R;
 import com.example.googlelibrosapi.data.Volume;
 //import com.example.googlelibrosapi.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.internal.Util;
 
 public class BookSearchResultsAdapter extends RecyclerView.Adapter<BookSearchResultsAdapter.BookSearchResultHolder> {
     private List<Volume> results = new ArrayList<>();
@@ -62,6 +61,16 @@ public class BookSearchResultsAdapter extends RecyclerView.Adapter<BookSearchRes
         }
     }
 
+    public interface ItemClickListener {
+        void onClick(View view, Volume volume);
+    }
+
+    private ItemClickListener clickListener;
+
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.clickListener = itemClickListener;
+    }
+
     @Override
     public int getItemCount() {
         return results.size();
@@ -72,7 +81,7 @@ public class BookSearchResultsAdapter extends RecyclerView.Adapter<BookSearchRes
         notifyDataSetChanged();
     }
 
-    class BookSearchResultHolder extends RecyclerView.ViewHolder {
+    class BookSearchResultHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView titleTextView;
         private TextView authorsTextView;
         private TextView publishedDateTextView;
@@ -85,6 +94,14 @@ public class BookSearchResultsAdapter extends RecyclerView.Adapter<BookSearchRes
             authorsTextView = itemView.findViewById(R.id.book_item_authors);
             publishedDateTextView = itemView.findViewById(R.id.book_item_publishedDate);
             smallThumbnailImageView = itemView.findViewById(R.id.book_item_smallThumbnail);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Volume v = results.get(getAdapterPosition());
+            v.getId();
+            if (clickListener != null) clickListener.onClick(view, v);
         }
     }
 }

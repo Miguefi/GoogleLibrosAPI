@@ -13,4 +13,9 @@ public interface BookSearchService {
             @Query("inauthor") String author
             //,@Query("key") String apiKey
     );
+
+    @GET("/books/v1/volumes/id")
+    Call<VolumesResponse> searchVolumesById(
+            @Query("id") String id
+    );
 }
