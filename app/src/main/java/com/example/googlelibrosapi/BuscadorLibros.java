@@ -20,11 +20,13 @@ import com.example.googlelibrosapi.data.VolumesResponse;
 public class BuscadorLibros extends AppCompatActivity {
 
     public static final String BOOK_ID = "";
+    private static final int ITEMS_PER_PAGE = 10;
     TextView busqueda, autor;
-    Button buscar;
+    Button buscar, mas;
     RecyclerView listado;
     BookSearchViewModel vm;
     LiveData<VolumesResponse> data;
+    int startIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,8 @@ public class BuscadorLibros extends AppCompatActivity {
         autor = findViewById(R.id.idAutor);
         buscar = findViewById(R.id.idBuscar);
         listado = findViewById(R.id.idList);
+        mas = findViewById(R.id.mas);
+        startIndex = 0;
 
         BookSearchResultsAdapter adapter = new BookSearchResultsAdapter();
         listado.setLayoutManager(new LinearLayoutManager(this));
@@ -48,7 +52,19 @@ public class BuscadorLibros extends AppCompatActivity {
         });
 
         buscar.setOnClickListener((v)->{
-            vm.searchVolumes(busqueda.getText().toString() , autor.getText().toString());
+            startIndex = 0;
+            vm.searchVolumes(
+                    busqueda.getText().toString() ,
+                    autor.getText().toString() ,
+                    Integer.toString(startIndex));
+        });
+
+        mas.setOnClickListener((v)->{
+            startIndex += ITEMS_PER_PAGE;
+            vm.searchVolumes(
+                    busqueda.getText().toString() ,
+                    autor.getText().toString() ,
+                    Integer.toString(startIndex));
         });
 
         adapter.setClickListener(new BookSearchResultsAdapter.ItemClickListener() {

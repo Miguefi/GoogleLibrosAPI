@@ -77,7 +77,7 @@ public class BookSearchResultsAdapter extends RecyclerView.Adapter<BookSearchRes
     }
 
     public void setResults(List<Volume> results) {
-        this.results = results;
+        this.results.addAll(results);
         notifyDataSetChanged();
     }
 

@@ -23,10 +23,10 @@ public class BookSearchViewModel extends AndroidViewModel {
         volumesResponseLiveData = bookRepository.getVolumesResponseLiveData();
     }
 
-    public void searchVolumes(String keyword, String author) {
+    public void searchVolumes(String keyword, String author, String startIndex) {
         //Dotenv dotenv = Dotenv.configure().directory("/assets").filename("env").load();
         //bookRepository.searchVolumes(keyword, author, dotenv.get("GOOGLE_API_KEY"));
-        bookRepository.searchVolumes(keyword, author);
+        bookRepository.searchVolumes(keyword, author, startIndex);
     }
 
     public void searchVolumesById(String id) {
