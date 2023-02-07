@@ -8,10 +8,14 @@ import androidx.lifecycle.LiveData;
 
 import com.example.googlelibrosapi.api.BookRepository;
 
-public class DetailViewModel {
+public class DetailViewModel extends AndroidViewModel {
 
-        private BookRepository bookRepository;
-        private LiveData<VolumesResponse> volumesResponseLiveData;
+    private BookRepository bookRepository;
+    private LiveData<Volume> volumeLiveData;
+
+    public DetailViewModel(@NonNull Application application) {
+        super(application);
+    }
 
         //public DetailViewModel(@NonNull Application application) {
         //    super(application);
@@ -19,17 +23,17 @@ public class DetailViewModel {
 
         public void init() {
             bookRepository = new BookRepository();
-            volumesResponseLiveData = bookRepository.getVolumesResponseLiveData();
+            volumeLiveData = bookRepository.getVolumeLiveData();
         }
 
-        public void searchVolumes(String keyword, String author) {
+        public void searchVolumesById(String id) {
             //Dotenv dotenv = Dotenv.configure().directory("/assets").filename("env").load();
             //bookRepository.searchVolumes(keyword, author, dotenv.get("GOOGLE_API_KEY"));
-            bookRepository.searchVolumes(keyword, author);
+            bookRepository.searchVolumesById(id);
         }
 
-        public LiveData<VolumesResponse> getVolumesResponseLiveData() {
-            return volumesResponseLiveData;
+        public LiveData<Volume> getVolumeLiveData() {
+            return volumeLiveData;
         }
 
 }

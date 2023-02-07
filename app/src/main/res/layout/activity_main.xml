@@ -45,7 +45,7 @@
         android:id="@+id/mas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mas" />
+        android:text="Mas Resultados" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

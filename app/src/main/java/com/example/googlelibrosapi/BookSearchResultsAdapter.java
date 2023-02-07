@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import com.bumptech.glide.Glide;
@@ -20,7 +21,55 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookSearchResultsAdapter extends RecyclerView.Adapter<BookSearchResultsAdapter.BookSearchResultHolder> {
+
+//    private final int VIEW_ITEM = 1;
+//    private final int VIEW_PROG = 0;
+
     private List<Volume> results = new ArrayList<>();
+
+//    // The minimum amount of items to have below your current scroll position
+//    // before loading more.
+//    private int visibleThreshold = 10;
+//    private int lastVisibleItem, totalItemCount;
+//    private boolean loading;
+//    private OnLoadMoreListener onLoadMoreListener;
+//
+//    public interface OnLoadMoreListener {
+//        void onLoadMore();
+//    }
+
+
+//    public BookSearchResultsAdapter(RecyclerView recyclerView) {
+//
+//        if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
+//
+//            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView
+//                    .getLayoutManager();
+//
+//
+//            recyclerView
+//                    .addOnScrollListener(new RecyclerView.OnScrollListener() {
+//                        @Override
+//                        public void onScrolled(RecyclerView recyclerView,
+//                                               int dx, int dy) {
+//                            super.onScrolled(recyclerView, dx, dy);
+//
+//                            totalItemCount = linearLayoutManager.getItemCount();
+//                            lastVisibleItem = linearLayoutManager
+//                                    .findLastVisibleItemPosition();
+//                            if (!loading
+//                                    && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+//                                // End has been reached
+//                                // Do something
+//                                if (onLoadMoreListener != null) {
+//                                    onLoadMoreListener.onLoadMore();
+//                                }
+//                                loading = true;
+//                            }
+//                        }
+//                    });
+//        }
+//    }
 
     @NonNull
     @Override
@@ -77,7 +126,7 @@ public class BookSearchResultsAdapter extends RecyclerView.Adapter<BookSearchRes
     }
 
     public void setResults(List<Volume> results) {
-        this.results.addAll(results);
+        this.results = results;
         notifyDataSetChanged();
     }
 

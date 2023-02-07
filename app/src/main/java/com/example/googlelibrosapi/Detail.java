@@ -2,55 +2,61 @@ package com.example.googlelibrosapi;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.googlelibrosapi.data.BookSearchViewModel;
+import com.bumptech.glide.Glide;
+import com.example.googlelibrosapi.data.DetailViewModel;
+import com.example.googlelibrosapi.data.Volume;
 import com.example.googlelibrosapi.data.VolumesResponse;
 
 public class Detail extends AppCompatActivity {
 
-    TextView busqueda, autor;
-    Button buscar;
-    RecyclerView listado;
-    BookSearchViewModel vm;
-    LiveData<VolumesResponse> data;
+    TextView autor, fechaPubli, titulo;
+    ImageView imagen;
+    DetailViewModel vm;
+    LiveData<Volume> data;
+    Volume libro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        //mensaje = findViewById(R.id.ut02idRecpetora);
         Intent i = getIntent();
-        String mensaje = i.getStringExtra(BuscadorLibros.BOOK_ID);
-        //mensaje.setText(i.getStringExtra(ut02Lanzadora.CLAVE_INFO));
+        String volumeId = i.getStringExtra(BuscadorLibros.BOOK_ID);
+        Log.d("ID", volumeId);
 
-        /*busqueda = findViewById(R.id.idBusqueda);
-        //autor = findViewById(R.id.idAutor);
-        //buscar = findViewById(R.id.idBuscar);
-        //listado = findViewById(R.id.idList);
+        fechaPubli = findViewById(R.id.book_item_publishedDate);
+        autor = findViewById(R.id.book_item_authors);
+        titulo = findViewById(R.id.book_item_title);
+        imagen = findViewById(R.id.book_item_smallThumbnail);
 
-        BookSearchResultsAdapter adapter = new BookSearchResultsAdapter();
-        listado.setLayoutManager(new LinearLayoutManager(this));
-        listado.setAdapter(adapter);
-
-        vm = new ViewModelProvider(this).get(BookSearchViewModel.class);
+        vm = new ViewModelProvider(this).get(DetailViewModel.class);
         vm.init();
-        data = vm.getVolumesResponseLiveData();
-        data.observe(this, (data)-> {
-            adapter.setResults(data.getItems());
-        });
+        data = vm.getVolumeLiveData();
+        vm.searchVolumesById(volumeId);
 
-        buscar.setOnClickListener((v)->{
-            vm.searchVolumes(busqueda.getText().toString() , autor.getText().toString());
-        });*/
+        data.observe(this, (data)-> {
+            //Log.d("Fallo", data.getItems().toString());
+            libro = data;
+            autor.setText(libro.getVolumeInfo().getAuthors().toString());
+            titulo.setText(libro.getVolumeInfo().getTitle());
+            fechaPubli.setText(libro.getVolumeInfo().getPublishedDate());
+            if (libro.getVolumeInfo().getImageLinks() != null) {
+                String imageUrl = libro.getVolumeInfo().getImageLinks().getSmallThumbnail()
+                        .replace("http://", "https://");
+
+                Glide.with(this).load(imageUrl).into(imagen);
+            }
+        });
 
     }
 }
